@@ -12,7 +12,8 @@ import java.util.List;
 public class productosServices {
     public producto ObtenerProductoConMasValoraciones(){
         Session session= HibernateUtil.getSession();
-        producto producto;
+
+        productos Miproducto=new productos();
         producto productoConMasValoraciones=new producto();
         try {
             session.beginTransaction();
@@ -24,6 +25,12 @@ public class productosServices {
                     "LIMIT 1";
             Query Consulta3=session.createQuery(Sql3, producto.class);
             productoConMasValoraciones= (org.example.DTO.producto) Consulta3.getSingleResult();
+
+            productoConMasValoraciones.setId(Miproducto.getId());
+            productoConMasValoraciones.setNombre(Miproducto.getNombre());
+            productoConMasValoraciones.setDescripcion(Miproducto.getDescripcion());
+            productoConMasValoraciones.setCategoria_id(Miproducto.getCategoria().getId());
+
             return productoConMasValoraciones;
         }finally {
             session.close();
